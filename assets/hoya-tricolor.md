@@ -1,0 +1,3 @@
+**Hoya carnosa** neboli hoja masitá je nenáročná popínavá sukulentní rostlina pocházející z Austrálie. Její dlouhé stonky zdobí dužnaté a lesklé tmavě zelené listy, které zaujmou svým bílo-žlutým, místy narůžovělým panašováním (odtud i název Hoya variegata). Hoye svůj český název voskovky získaly na základě svých hvězdicových květů, které se podobně jako jejich listy lesknou jako vosk.
+
+**Hoya carnosa tricolor** kvete od jara do podzimu sytě růžovými kvítky s rudofialovým středem, které intenzivně voní. Odkvetlé části rostliny nikdy neodstraňujeme, jelikož se na nich později utvoří další květenství. Hoje jsou rychle rostoucí rostliny, které je vhodné v růstu podpírat – často se vplétají do ozdobných podpor (třeba kruhů). 

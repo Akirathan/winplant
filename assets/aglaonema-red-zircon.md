@@ -1,0 +1,1 @@
+**Aglaonema** (také *Chinese evergreen* – čínská stálezelená rostlina) je kopinatá rostlina okrasná svými krásně zbarvenými listy, které vyrůstají v trsech, pocházející z oblasti jihovýchodní Asie. V létě se může u rostliny objevit jemné květenství žlutých nebo bílých toulců, které se po odkvětu mohou změnit v jedovaté bobule. 
