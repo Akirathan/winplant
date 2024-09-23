@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 class Plant {
   final String name;
-  final Markdown description;
+  final String description;
   final AssetImage image;
   final Category category;
   final Difficulty difficulty;
