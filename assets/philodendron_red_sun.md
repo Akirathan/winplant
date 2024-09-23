@@ -1,0 +1,4 @@
+# Philodendron Red Sun
+Philodendrony pochází z deštných pralesů především Střední a Jižní Ameriky. Jejich název je odvozen z řeckého slova phileo = milovat a dendron = strom, protože mnoho variet je popínavých a svými vzdušnými kořeny se dokáží přichytit na stromy. Podobný život jim můžeme zajistit i v domácích podmínkách, pokud jim do květináče dáme nějakou oporu, po které by také mohly šplhat, např. kokosovou tyč.
+Tento kultivar je poměrně novinkou a zaujme především svou žluto-oranžovou barvu připomínající zapadající slunce.
+Řadí se do čeledi árónovitých rostlin – takže pozor, je jedovatý! Tyto rostliny totiž ve svých pletivech obsahují krystaly šťavelanu vápenatého, který po požití způsobí podráždění sliznic dutiny ústní a trávicího traktu. Když ho ale umístíme na bezpečné místo, kde na něj nedosáhnou děti ani domácí mazlíčci, jeho nádherná barva jistě upoutá všechny pohledy.
