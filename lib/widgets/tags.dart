@@ -35,19 +35,12 @@ Widget waterWidget(Water water) {
 Widget _tag(Icon icon, String text) {
   return Row(
     children: [
-      Flexible(
-          flex: 2,
-          child: icon
-      ),
+      Flexible(flex: 2, child: icon),
       Flexible(
           child: Text(
-            text,
-            style: const TextStyle(
-                fontSize: 8,
-                overflow: TextOverflow.ellipsis
-            ),
-          )
-      )
+        text,
+        style: const TextStyle(fontSize: 8, overflow: TextOverflow.ellipsis),
+      ))
     ],
   );
 }
@@ -61,23 +54,17 @@ class FullSun extends LightWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _tag(
-        const Icon(Icons.wb_sunny, color: Colors.amber),
-        'Full Sun'
-    );
+    return _tag(const Icon(Icons.wb_sunny, color: Colors.amber), 'Full Sun');
   }
 }
-
 
 class PartialSun extends LightWidget {
   const PartialSun({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return _tag(
-      const Icon(Icons.wb_sunny_outlined, color: Colors.amber),
-      'Partial Sun'
-    );
+    return _tag(const Icon(Icons.wb_sunny_outlined, color: Colors.amber),
+        'Partial Sun');
   }
 }
 
@@ -90,10 +77,7 @@ class Easy extends DifficultyWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _tag(
-      const Icon(Icons.star),
-      'Easy'
-    );
+    return _tag(const Icon(Icons.star), 'Easy');
   }
 }
 
@@ -102,10 +86,7 @@ class Medium extends DifficultyWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _tag(
-      const Icon(Icons.star_half),
-      'Medium'
-    );
+    return _tag(const Icon(Icons.star_half), 'Medium');
   }
 }
 
@@ -114,10 +95,7 @@ class Hard extends DifficultyWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _tag(
-        const Icon(Icons.star_border),
-        'Hard'
-    );
+    return _tag(const Icon(Icons.star_border), 'Hard');
   }
 }
 
@@ -131,9 +109,7 @@ class FullWater extends WaterWidget {
   @override
   Widget build(BuildContext context) {
     return _tag(
-      const Icon(Icons.water_drop, color: Colors.blue),
-      'A lot of water'
-    );
+        const Icon(Icons.water_drop, color: Colors.blue), 'A lot of water');
   }
 }
 
@@ -142,9 +118,6 @@ class LowWater extends WaterWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _tag(
-      const Icon(Icons.water_drop_outlined),
-      'Low water'
-    );
+    return _tag(const Icon(Icons.water_drop_outlined), 'Low water');
   }
 }

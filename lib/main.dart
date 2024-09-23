@@ -29,11 +29,10 @@ class MyApp extends StatelessWidget {
           var plant = settings.arguments as Plant;
           return MaterialPageRoute(
             builder: (context) => Scaffold(
-              appBar: AppBar(
-                title: Text(plant.name),
-              ),
-                body: PlantWidget(plant: plant)
-            ),
+                appBar: AppBar(
+                  title: Text(plant.name),
+                ),
+                body: PlantWidget(plant: plant)),
           );
         } else if (settings.name == '/site') {
           var site = settings.arguments as Site;

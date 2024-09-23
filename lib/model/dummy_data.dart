@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:winplant/model/plant.dart';
 import 'package:winplant/model/site.dart';
 
-
 Future<Plant> monsteraStadleyana() async {
   return Plant(
       name: 'Monstera Stadleyana',
@@ -66,7 +65,13 @@ Future<Plant> syngoniumPixie() async {
 }
 
 Future<List<Plant>> allPlants() async {
-  return [await monsteraStadleyana(), await aglaonema(), await hoyaTricolor(), await philodendronRedSun(), await syngoniumPixie()];
+  return [
+    await monsteraStadleyana(),
+    await aglaonema(),
+    await hoyaTricolor(),
+    await philodendronRedSun(),
+    await syngoniumPixie()
+  ];
 }
 
 Future<Site> livingRoom() async {

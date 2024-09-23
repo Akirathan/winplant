@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:winplant/model/site.dart';
 import 'package:winplant/widgets/plant_widget.dart';
@@ -11,7 +10,8 @@ class SiteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var plantWidgets = site.plants.map((plant) => PlantWidget(plant: plant)).toList();
+    var plantWidgets =
+        site.plants.map((plant) => PlantWidget(plant: plant)).toList();
     return Column(
       children: <Widget>[
         Flexible(child: Image(image: site.image)),
@@ -19,12 +19,9 @@ class SiteWidget extends StatelessWidget {
         Flexible(child: lightWidget(site.light)),
         const Flexible(child: Text('Plants:')),
         Expanded(
-          child: ListView(
-            children: plantWidgets
-          ),
+          child: ListView(children: plantWidgets),
         )
       ],
     );
   }
-
 }

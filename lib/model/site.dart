@@ -9,7 +9,7 @@ class Site {
 
   Site({required this.name, required this.light, AssetImage? image})
       : plants = List<Plant>.empty(growable: true),
-    image = image ?? const AssetImage('assets/empty_image.jpg');
+        image = image ?? const AssetImage('assets/empty_image.jpg');
 
   void addPlant(Plant plant) {
     plants.add(plant);

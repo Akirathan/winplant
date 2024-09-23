@@ -12,12 +12,8 @@ class SitePreviewWidget extends StatelessWidget {
     return Center(
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-            width: 2,
-            style: BorderStyle.solid
-          )
-        ),
+            border: Border.all(
+                color: Colors.grey, width: 2, style: BorderStyle.solid)),
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ConstrainedBox(
           constraints: const BoxConstraints(
@@ -35,23 +31,18 @@ class SitePreviewWidget extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Flexible(
-                      flex: 2,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/site', arguments: site);
-                        },
-                        child: Text(
-                          site.name,
-                          style: const TextStyle(fontSize: 17)
-                        )
-                      )
-                    ),
+                        flex: 2,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/site',
+                                  arguments: site);
+                            },
+                            child: Text(site.name,
+                                style: const TextStyle(fontSize: 17)))),
                     const Spacer(),
-                    Flexible(
-                      fit: FlexFit.loose,
-                      child: lightWidget(site.light)
-                    )
-                  ],),
+                    Flexible(fit: FlexFit.loose, child: lightWidget(site.light))
+                  ],
+                ),
               ),
             ],
           ),

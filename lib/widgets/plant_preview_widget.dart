@@ -14,29 +14,26 @@ class PlantPreviewWidget extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Flexible(
-            flex: 2,
-            child: Row(
-              children: [
-                Flexible(
-                  child: Image(
-                    image: plant.image,
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
-                Flexible(
-                  flex: 2,
-                  child: Text(
-                    plant.description,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontStyle: FontStyle.italic
+              flex: 2,
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Image(
+                      image: plant.image,
+                      fit: BoxFit.scaleDown,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
-            )
-          ),
+                  Flexible(
+                    flex: 2,
+                    child: Text(
+                      plant.description,
+                      style: const TextStyle(
+                          fontSize: 13, fontStyle: FontStyle.italic),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              )),
           Flexible(
             child: ElevatedButton(
               child: Text(plant.name, style: const TextStyle(fontSize: 17)),
