@@ -20,11 +20,8 @@ class PlantWidget extends StatelessWidget {
       children: <Widget>[
         Image(image: plant.image),
         Text(plant.name, style: const TextStyle(fontSize: 20)),
-        const Spacer(),
-        plant.description,
-        const Spacer(),
-        // tags
-        Container(child: _tags())
+        _description(),
+        _tags(),
       ],
     );
   }
@@ -40,5 +37,11 @@ class PlantWidget extends StatelessWidget {
         crossAxisCount: children.length,
         shrinkWrap: true,
         children: children);
+  }
+
+  Widget _description() {
+    return Text(
+      plant.description,
+    );
   }
 }
