@@ -32,6 +32,26 @@ Widget waterWidget(Water water) {
   }
 }
 
+Widget _tag(Icon icon, String text) {
+  return Row(
+    children: [
+      Flexible(
+          flex: 2,
+          child: icon
+      ),
+      Flexible(
+          child: Text(
+            text,
+            style: const TextStyle(
+                fontSize: 8,
+                overflow: TextOverflow.ellipsis
+            ),
+          )
+      )
+    ],
+  );
+}
+
 sealed class LightWidget extends StatelessWidget {
   const LightWidget({super.key});
 }
@@ -41,27 +61,23 @@ class FullSun extends LightWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      child: ListTile(
-        leading: Icon(
-          Icons.wb_sunny,
-        ),
-        iconColor: Colors.amber,
-        title: Text('Full Sun'),
-      ),
+    return _tag(
+        const Icon(Icons.wb_sunny, color: Colors.amber),
+        'Full Sun'
     );
   }
 }
+
 
 class PartialSun extends LightWidget {
   const PartialSun({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-        child: ListTile(
-            leading: Icon(Icons.wb_sunny_outlined),
-            title: Text("Partial Sun")));
+    return _tag(
+      const Icon(Icons.wb_sunny_outlined, color: Colors.amber),
+      'Partial Sun'
+    );
   }
 }
 
@@ -74,11 +90,9 @@ class Easy extends DifficultyWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      child: ListTile(
-        leading: Icon(Icons.star),
-        title: Text('Easy'),
-      ),
+    return _tag(
+      const Icon(Icons.star),
+      'Easy'
     );
   }
 }
@@ -88,8 +102,10 @@ class Medium extends DifficultyWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-        child: ListTile(leading: Icon(Icons.star_half), title: Text("Medium")));
+    return _tag(
+      const Icon(Icons.star_half),
+      'Medium'
+    );
   }
 }
 
@@ -98,8 +114,10 @@ class Hard extends DifficultyWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-        child: ListTile(leading: Icon(Icons.star_border), title: Text("Hard")));
+    return _tag(
+        const Icon(Icons.star_border),
+        'Hard'
+    );
   }
 }
 
@@ -112,11 +130,9 @@ class FullWater extends WaterWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      child: ListTile(
-        leading: Icon(Icons.water_drop, color: Colors.blue),
-        title: Text('A lot of water'),
-      ),
+    return _tag(
+      const Icon(Icons.water_drop, color: Colors.blue),
+      'A lot of water'
     );
   }
 }
@@ -126,11 +142,9 @@ class LowWater extends WaterWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      child: ListTile(
-        leading: Icon(Icons.water_drop_outlined),
-        title: Text('Low water'),
-      ),
+    return _tag(
+      const Icon(Icons.water_drop_outlined),
+      'Low water'
     );
   }
 }
