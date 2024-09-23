@@ -5,13 +5,8 @@ class DashBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('DashBoard'),
-      ),
-      body: const Center(
-        child: Text('DashBoard'),
-      ),
+    return const Center(
+      child: Text('Dashboard')
     );
   }
 }
