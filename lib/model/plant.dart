@@ -1,32 +1,12 @@
-import 'package:flutter/material.dart';
 
+import 'package:winplant/model/history.dart';
+import 'package:winplant/model/plant_info.dart';
+
+/// A plant that is planted in the user's garden.
+/// A mutable version of [PlantInfo].
 class Plant {
-  final String name;
-  final String description;
-  final AssetImage image;
-  final Category category;
-  final Difficulty difficulty;
-  final Light light;
-  final Water water;
+  final PlantInfo info;
+  final TimeLine timeLine;
 
-  /// in cm
-  final int maxHeight;
-
-  Plant(
-      {required this.name,
-      required this.description,
-      required this.image,
-      required this.category,
-      required this.difficulty,
-      required this.light,
-      required this.water,
-      required this.maxHeight});
+  Plant({required this.info, required this.timeLine});
 }
-
-enum Category { tropical, subtropical }
-
-enum Difficulty { easy, medium, hard }
-
-enum Light { fullSun, partialSun, shade }
-
-enum Water { fullWater, lowWater }

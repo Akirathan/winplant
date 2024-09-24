@@ -83,9 +83,13 @@ Future<Site> livingRoom() async {
     image: const AssetImage('assets/living_room.png'),
     light: Light.partialSun,
   );
-  site.addPlant(await monsteraStadleyana());
-  site.addPlant(await aglaonema());
-  site.addPlant(await hoyaTricolor());
+  var monsteraTimeLine = TimeLine();
+  monsteraTimeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-01')));
+  monsteraTimeLine.addEvent(Fertilization(dateTime: DateTime.parse('2024-09-03')));
+  monsteraTimeLine.addEvent(Note(dateTime: DateTime.parse('2024-09-10'), note: 'To mi to ale pekne roste!'));
+  monsteraTimeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-12')));
+  site.addPlant(Plant(info: await monsteraStadleyana(), timeLine: monsteraTimeLine));
+  site.addPlant(Plant(info: await aglaonema(), timeLine: TimeLine()));
   return site;
 }
 
