@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:winplant/model/plant_info.dart';
 import 'package:winplant/routes.dart';
 
-class PlantPreviewWidget extends StatelessWidget {
-  final Plant plant;
+/// Preview of [PlantInfo].
+class PlantInfoPreviewWidget extends StatelessWidget {
+  final PlantInfo plant;
 
-  const PlantPreviewWidget({super.key, required this.plant});
+  const PlantInfoPreviewWidget({super.key, required this.plant});
 
   @override
   Widget build(BuildContext context) {

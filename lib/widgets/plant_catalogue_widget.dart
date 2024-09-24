@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:winplant/model/dummy_data.dart' as dummy;
-import 'package:winplant/model/plant.dart';
-import 'package:winplant/widgets/plant_preview_widget.dart';
-import 'package:winplant/widgets/plant_widget.dart';
+import 'package:winplant/model/plant_info.dart';
+import 'package:winplant/widgets/plant_info_preview_widget.dart';
 
 class PlantCatalogueWidget extends StatelessWidget {
   const PlantCatalogueWidget({super.key});
@@ -22,7 +21,7 @@ class PlantCatalogueWidget extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             var plantWidgets = snapshot.data
-                ?.map((plant) => PlantPreviewWidget(plant: plant))
+                ?.map((plant) => PlantInfoPreviewWidget(plant: plant))
                 .toList();
             return Column(
               children: <Widget>[
@@ -38,7 +37,7 @@ class PlantCatalogueWidget extends StatelessWidget {
         });
   }
 
-  Future<List<Plant>> _fetchAllPlants() async {
+  Future<List<PlantInfo>> _fetchAllPlants() async {
     return dummy.allPlants();
   }
 }

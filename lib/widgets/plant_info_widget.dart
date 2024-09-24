@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:winplant/model/plant.dart';
+import 'package:winplant/model/plant_info.dart';
 import 'package:winplant/widgets/tags.dart';
 
-/**
- * Plant as displayed in the catalogue.
- */
-class PlantWidget extends StatelessWidget {
-  final Plant plant;
+/// Plant details as displayed in the catalogue.
+class PlantInfoWidget extends StatelessWidget {
+  final PlantInfo plant;
 
-  const PlantWidget({
+  const PlantInfoWidget({
     super.key,
     required this.plant,
   });

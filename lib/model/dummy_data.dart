@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:winplant/model/history.dart';
 import 'package:winplant/model/plant.dart';
+import 'package:winplant/model/plant_info.dart';
 import 'package:winplant/model/site.dart';
 
-Future<Plant> monsteraStadleyana() async {
-  return Plant(
+Future<PlantInfo> monsteraStadleyana() async {
+  return PlantInfo(
       name: 'Monstera Stadleyana',
       description: await _description("assets/monstera-standleyana.md"),
       image: const AssetImage('assets/monstera-standleyana.png'),
@@ -16,8 +19,8 @@ Future<Plant> monsteraStadleyana() async {
       maxHeight: 25);
 }
 
-Future<Plant> aglaonema() async {
-  return Plant(
+Future<PlantInfo> aglaonema() async {
+  return PlantInfo(
       name: 'Aglaonema',
       description: await _description("assets/aglaonema-red-zircon.md"),
       image: const AssetImage('assets/aglaonema-red-zircon.png'),
@@ -28,8 +31,8 @@ Future<Plant> aglaonema() async {
       maxHeight: 25);
 }
 
-Future<Plant> hoyaTricolor() async {
-  return Plant(
+Future<PlantInfo> hoyaTricolor() async {
+  return PlantInfo(
       name: 'Hoya Tricolor',
       description: await _description("assets/hoya-tricolor.md"),
       image: const AssetImage('assets/hoya-tricolor.png'),
@@ -40,8 +43,8 @@ Future<Plant> hoyaTricolor() async {
       maxHeight: 12);
 }
 
-Future<Plant> philodendronRedSun() async {
-  return Plant(
+Future<PlantInfo> philodendronRedSun() async {
+  return PlantInfo(
       name: 'Philodendron Red Sun',
       description: await _description("assets/philodendron_red_sun.md"),
       image: const AssetImage('assets/philodendron_red_sun.png'),
@@ -52,8 +55,8 @@ Future<Plant> philodendronRedSun() async {
       maxHeight: 10);
 }
 
-Future<Plant> syngoniumPixie() async {
-  return Plant(
+Future<PlantInfo> syngoniumPixie() async {
+  return PlantInfo(
       name: 'Syngonium Pixie',
       description: await _description("assets/syngonium_pixie.md"),
       image: const AssetImage('assets/syngonium_pixie.png'),
@@ -64,7 +67,7 @@ Future<Plant> syngoniumPixie() async {
       maxHeight: 12);
 }
 
-Future<List<Plant>> allPlants() async {
+Future<List<PlantInfo>> allPlants() async {
   return [
     await monsteraStadleyana(),
     await aglaonema(),
@@ -76,7 +79,7 @@ Future<List<Plant>> allPlants() async {
 
 Future<Site> livingRoom() async {
   var site = Site(
-    name: 'obyvak',
+    name: 'Obyvak',
     image: const AssetImage('assets/living_room.png'),
     light: Light.partialSun,
   );
@@ -92,8 +95,8 @@ Future<Site> kitchen() async {
     image: const AssetImage('assets/kitchen.png'),
     light: Light.fullSun,
   );
-  site.addPlant(await philodendronRedSun());
-  site.addPlant(await syngoniumPixie());
+  site.addPlant(Plant(info: await philodendronRedSun(), timeLine: TimeLine()));
+  site.addPlant(Plant(info: await syngoniumPixie(), timeLine: TimeLine()));
   return site;
 }
 

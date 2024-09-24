@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:winplant/model/plant.dart';
+import 'package:winplant/model/plant_info.dart';
 
 Widget lightWidget(Light light) {
   switch (light) {
