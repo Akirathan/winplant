@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:winplant/model/plant.dart';
+import 'package:winplant/model/plant_info.dart';
+import 'package:winplant/routes.dart';
 
 class PlantPreviewWidget extends StatelessWidget {
   final Plant plant;
@@ -38,7 +39,7 @@ class PlantPreviewWidget extends StatelessWidget {
             child: ElevatedButton(
               child: Text(plant.name, style: const TextStyle(fontSize: 17)),
               onPressed: () {
-                Navigator.pushNamed(context, '/plant', arguments: plant);
+                Navigator.pushNamed(context, plantInfoRoute, arguments: plant);
               },
             ),
           )

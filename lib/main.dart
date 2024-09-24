@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:winplant/routes.dart';
 import 'package:winplant/widgets/dashboard.dart';
 import 'package:winplant/widgets/plant_catalogue_widget.dart';
-import 'package:winplant/widgets/plant_widget.dart';
 import 'package:winplant/widgets/site_list_widget.dart';
-import 'package:winplant/widgets/site_preview_widget.dart';
-import 'package:winplant/model/dummy_data.dart' as dummy;
-import 'package:winplant/widgets/site_widget.dart';
 
-import 'model/plant.dart';
-import 'model/site.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,29 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Win Plant',
       theme: ThemeData(useMaterial3: true),
       home: const _MainScaffold(),
-      onGenerateRoute: (RouteSettings settings) {
-        if (settings.name == '/plant') {
-          var plant = settings.arguments as Plant;
-          return MaterialPageRoute(
-            builder: (context) => Scaffold(
-                appBar: AppBar(
-                  title: Text(plant.name),
-                ),
-                body: PlantWidget(plant: plant)),
-          );
-        } else if (settings.name == '/site') {
-          var site = settings.arguments as Site;
-          return MaterialPageRoute(
-            builder: (context) => Scaffold(
-              appBar: AppBar(
-                title: Text(site.name),
-              ),
-              body: SiteWidget(site: site),
-            ),
-          );
-        }
-        return null;
-      },
+      onGenerateRoute: (RouteSettings settings) => generateRoute(settings)
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winplant/model/site.dart';
+import 'package:winplant/routes.dart';
 import 'package:winplant/widgets/tags.dart';
 
 class SitePreviewWidget extends StatelessWidget {
@@ -34,7 +35,7 @@ class SitePreviewWidget extends StatelessWidget {
                         flex: 2,
                         child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/site',
+                              Navigator.pushNamed(context, siteRoute,
                                   arguments: site);
                             },
                             child: Text(site.name,
