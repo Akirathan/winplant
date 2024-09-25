@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:winplant/assets.dart';
 import 'package:winplant/model/plant.dart';
 import 'package:winplant/model/plant_info.dart';
 
@@ -11,7 +12,7 @@ class Site {
 
   Site({required this.name, required this.light, AssetImage? image})
       : plants = List<Plant>.empty(growable: true),
-        image = image ?? const AssetImage('assets/empty_image.jpg');
+        image = image ?? emptyImage();
 
   /// Add plant to the garden - plant it.
   void addPlant(Plant plant) {
