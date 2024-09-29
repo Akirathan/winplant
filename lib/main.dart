@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:winplant/routes.dart';
 import 'package:winplant/widgets/dashboard.dart';
 import 'package:winplant/widgets/plant_catalogue_widget.dart';
-import 'package:winplant/widgets/site_list_widget.dart';
+import 'package:winplant/widgets/garden_widget.dart';
 
 
 void main() {
@@ -38,7 +38,7 @@ class _MainScaffoldState extends State<_MainScaffold> {
   Widget build(BuildContext context) {
     var dashBoard = const DashBoard();
     var plantCatalogue = const PlantCatalogueWidget();
-    var siteList = const SiteListWidget();
+    var garden = const GardenWidget();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Win Plant'),
@@ -55,7 +55,7 @@ class _MainScaffoldState extends State<_MainScaffold> {
           ),
           NavigationDestination(
             icon: Icon(Icons.home),
-            label: 'Site List',
+            label: 'Garden',
           ),
         ],
         onDestinationSelected: (int idx) {
@@ -65,7 +65,7 @@ class _MainScaffoldState extends State<_MainScaffold> {
         },
         selectedIndex: _currPageIdx,
       ),
-      body: <Widget>[dashBoard, plantCatalogue, siteList][_currPageIdx],
+      body: <Widget>[dashBoard, plantCatalogue, garden][_currPageIdx],
     );
   }
 }
