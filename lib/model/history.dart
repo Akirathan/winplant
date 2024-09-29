@@ -33,4 +33,9 @@ class TimeLine {
   List<Event> getEventsByTime() {
     return _events;
   }
+
+  void replaceAllEvents(List<Event> events) {
+    _events.clear();
+    _events.addAll(events);
+  }
 }

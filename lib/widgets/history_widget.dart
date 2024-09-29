@@ -21,6 +21,12 @@ class TimeLineWidgetState extends State<TimeLineWidget> {
   }
 
   @override
+  void dispose() {
+    widget.timeLine.replaceAllEvents(_events);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: false,
