@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:winplant/model/plant.dart';
 import 'package:winplant/model/site.dart';
@@ -15,7 +17,7 @@ class GardenWidget extends StatefulWidget {
 
 class _GardenWidgetState extends State<GardenWidget> {
   bool _isLoading = true;
-  final List<Plant> _allPlants = List.empty(growable: true);
+  List<Plant> _allPlants = List.empty(growable: true);
   late List<Site> _sites;
 
   @override
@@ -24,12 +26,8 @@ class _GardenWidgetState extends State<GardenWidget> {
     _fetchAllSites().then((result) => {
       setState(() {
         _sites = result;
-        for (var site in _sites) {
-          for (var plant in site.plants) {
-            _allPlants.add(plant);
-          }
-        }
-        _isLoading = false;
+            _allPlants = _plantsFromSites(_sites).toList();
+            _isLoading = false;
       })
     });
   }
@@ -46,17 +44,21 @@ class _GardenWidgetState extends State<GardenWidget> {
       child: Column(
         children: [
           Flexible(
-            child: TabBar(
-              tabs: [
-                const Tab(
-                  icon: Icon(Icons.location_city),
-                  text: 'By Sites',
-                ),
-                Tab(
-                  icon: Icon(Icons.eco_outlined, color: Colors.green.shade300),
-                  text: 'By Plants',
-                )
-              ],
+            child: ConstrainedBox(
+              constraints: const BoxConstraints.tightFor(height: 50),
+              child: TabBar(
+                tabs: [
+                  const Tab(
+                    icon: Icon(Icons.location_city),
+                    text: 'By Sites',
+                  ),
+                  Tab(
+                    icon:
+                        Icon(Icons.eco_outlined, color: Colors.green.shade300),
+                    text: 'By Plants',
+                  )
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -112,6 +114,7 @@ class _GardenWidgetState extends State<GardenWidget> {
       return Container(
         constraints: const BoxConstraints.tightFor(height: 80, width: 200),
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+        // An elevated button that looks like a Card for a plant.
         child: ElevatedButton(
           onPressed: () {
             Navigator.pushNamed(context, plantRoute, arguments: plant);
@@ -156,8 +159,54 @@ class _GardenWidgetState extends State<GardenWidget> {
       );
     });
 
-    return ListView(
-      children: plantWidgets.toList()
+    var searchPlant = Container(
+      constraints: const BoxConstraints.tightFor(height: 35),
+      margin: const EdgeInsets.symmetric(horizontal: 15),
+      child: TextField(
+        decoration: const InputDecoration(
+          labelText: 'Search plant',
+          hintText: 'Enter a plant name',
+          border:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.black38)),
+          icon: Icon(Icons.search),
+        ),
+        onChanged: (String text) {
+          if (text.isEmpty) {
+            setState(() {
+              _allPlants = _plantsFromSites(_sites).toList();
+            });
+            return;
+          }
+          var matchingPlants = _matchingPlants(text);
+          var matchingNames =
+              matchingPlants.map((plant) => _nameForPlant(plant));
+          log('Matching plants for text $text: $matchingNames');
+          setState(() {
+            _allPlants = matchingPlants.toList(growable: true);
+          });
+        },
+      ),
+    );
+
+    var addPlant = IconButton(
+        icon: const Icon(
+          Icons.add_circle_rounded,
+          color: Colors.green,
+        ),
+        onPressed: () {
+          // TODO: Add plant
+        });
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(child: searchPlant),
+        Expanded(
+          flex: 6,
+          child: ListView(children: plantWidgets.toList()),
+        ),
+        Flexible(child: addPlant)
+      ],
     );
   }
 
@@ -169,5 +218,28 @@ class _GardenWidgetState extends State<GardenWidget> {
     }
     throw Exception('Plant not found in any site');
   }
+
+  Iterable<Plant> _matchingPlants(String name) {
+    return _allPlants.where((plant) => _nameMatches(name, plant));
+  }
 }
 
+String _nameForPlant(Plant plant) {
+  return plant.name ?? plant.info.name;
+}
+
+String _normalizedName(String name) {
+  return name.toLowerCase();
+}
+
+bool _nameMatches(String name, Plant plant) {
+  return _normalizedName(_nameForPlant(plant)).contains(name);
+}
+
+Iterable<Plant> _plantsFromSites(List<Site> sites) {
+  var plants = <Plant>[];
+  for (var site in sites) {
+    plants.addAll(site.plants);
+  }
+  return plants;
+}
