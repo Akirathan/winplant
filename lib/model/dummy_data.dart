@@ -90,6 +90,8 @@ Future<Site> livingRoom() async {
   monsteraTimeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-12')));
   site.addPlant(Plant(info: await monsteraStadleyana(), timeLine: monsteraTimeLine));
   site.addPlant(Plant(info: await aglaonema(), timeLine: TimeLine()));
+  site.addPlant(Plant(info: await hoyaTricolor(), timeLine: TimeLine()));
+  site.addPlant(Plant(info: await syngoniumPixie(), timeLine: TimeLine()));
   return site;
 }
 
