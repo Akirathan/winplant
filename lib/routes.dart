@@ -1,12 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:winplant/model/plant.dart';
 import 'package:winplant/widgets/plant_info_widget.dart';
+import 'package:winplant/widgets/plant_widget.dart';
 import 'package:winplant/widgets/site_widget.dart';
 
 import 'model/plant_info.dart';
 import 'model/site.dart';
 
 const plantInfoRoute = '/plant-info';
+const plantRoute = '/plant';
 const siteRoute = '/site';
 
 MaterialPageRoute<Scaffold> generateRoute(RouteSettings settings) {
@@ -20,6 +23,12 @@ MaterialPageRoute<Scaffold> generateRoute(RouteSettings settings) {
           ),
           body: PlantInfoWidget(plant: plant),
         ),
+      );
+    }
+    case plantRoute : {
+      var plant = settings.arguments as Plant;
+      return MaterialPageRoute(
+        builder: (context) => PlantWidget(plant: plant)
       );
     }
     case siteRoute : {
