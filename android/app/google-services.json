@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1048026278921",
+    "project_id": "winplant-cba87",
+    "storage_bucket": "winplant-cba87.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048026278921:android:a6ca5cd4b60713692b1cd8",
+        "android_client_info": {
+          "package_name": "org.pmarek.winplant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTI5zLUUt_mhhw6tSYvJn_pMoMmhqRi8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
