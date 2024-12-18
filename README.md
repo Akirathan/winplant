@@ -1,16 +1,18 @@
 # winplant
 
-A new Flutter project.
+Mobile app for taking care of plants. Based on Flutter and FireBase.
 
-## Getting Started
+## Firebase
 
-This project is a starting point for a Flutter application.
+Setup
 
-A few resources to get you started if this is your first Flutter project:
+### Secrets
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Required secrets in `.env`:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- apiKey
+- appId
+- messagingSenderId
+- projectId
+- storageBucket
+- shoptetUrl
