@@ -42,6 +42,7 @@ dependencies:
   firedart: ^0.9.8
   http: ^1.2.2
   flutter_dotenv: ^5.2.1
+  dotenv: ^4.2.0
 
 dev_dependencies:
   flutter_test:
