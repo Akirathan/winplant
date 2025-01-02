@@ -1,6 +1,12 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:winplant/routes.dart';
 import 'package:winplant/widgets/dashboard.dart';
+import 'package:winplant/data/prefill_firestore.dart';
 import 'package:winplant/widgets/plant_catalogue_widget.dart';
 import 'package:winplant/widgets/garden_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +17,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // If Flutter is run in development mode
+  if (!kReleaseMode) {
+    await _prefillFirestoreData();
+  } else {
+    throw UnsupportedError(
+        'Firestore emulator is only supported in development mode');
+  }
   runApp(const MyApp());
 }
 
@@ -21,11 +34,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Win Plant',
-      theme: ThemeData(useMaterial3: true),
-      home: const _MainScaffold(),
-      onGenerateRoute: (RouteSettings settings) => generateRoute(settings)
-    );
+        title: 'Win Plant',
+        theme: ThemeData(useMaterial3: true),
+        home: const _MainScaffold(),
+        onGenerateRoute: (RouteSettings settings) => generateRoute(settings));
   }
 }
 
@@ -73,4 +85,13 @@ class _MainScaffoldState extends State<_MainScaffold> {
       body: <Widget>[dashBoard, plantCatalogue, garden][_currPageIdx],
     );
   }
+}
+
+_prefillFirestoreData() async {
+  log('Prefilling Firestore with dummy data', name: 'prefill');
+  FirebaseFirestore.instance.useFirestoreEmulator("127.0.0.1", 8080);
+  var db = FirebaseFirestore.instance;
+  await dotenv.load();
+  var shoptetUri = Uri.parse(dotenv.env['shoptetUrl']!);
+  await initPlants(db, shoptetUri);
 }
