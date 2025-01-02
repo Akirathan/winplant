@@ -10,6 +10,7 @@ import 'package:winplant/data/prefill_firestore.dart';
 import 'package:winplant/widgets/plant_catalogue_widget.dart';
 import 'package:winplant/widgets/garden_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -19,7 +20,7 @@ void main() async {
   );
   // If Flutter is run in development mode
   if (!kReleaseMode) {
-    await _prefillFirestoreData();
+    await _initEmulators();
   } else {
     throw UnsupportedError(
         'Firestore emulator is only supported in development mode');
@@ -87,11 +88,31 @@ class _MainScaffoldState extends State<_MainScaffold> {
   }
 }
 
-_prefillFirestoreData() async {
+_initEmulators() async {
   log('Prefilling Firestore with dummy data', name: 'prefill');
   FirebaseFirestore.instance.useFirestoreEmulator("127.0.0.1", 8080);
   var db = FirebaseFirestore.instance;
   await dotenv.load();
   var shoptetUri = Uri.parse(dotenv.env['shoptetUrl']!);
   await initPlants(db, shoptetUri);
+  // Init auth emulator
+  var auth = FirebaseAuth.instance;
+  await auth.useAuthEmulator('127.0.0.1', 9099);
+  var userEmail = 'dummy@dummy.org';
+  var userPwd = '123456';
+  User user;
+  try {
+    var signedIn = await auth.signInWithEmailAndPassword(
+        email: userEmail, password: userPwd);
+    user = signedIn.user!;
+  } on FirebaseException {
+    // The account is not yet created
+    var userCredential = await auth.createUserWithEmailAndPassword(
+        email: userEmail, password: userPwd);
+    user = userCredential.user!;
+    log('Created user $user', name: 'prefill');
+  }
+  var userId = user.uid;
+  log('User logger: $userId', name: 'prefill');
+  assert(auth.currentUser != null);
 }
