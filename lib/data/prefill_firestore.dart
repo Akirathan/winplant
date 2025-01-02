@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:winplant/model/history.dart';
 import 'package:xml/xml.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
@@ -48,6 +49,22 @@ initPlants(FirebaseFirestore db, Uri shoptetUri) async {
     await Future.wait(updateTasks);
     developer.log('All futures completed', name: 'prefill');
   }
+}
+
+/// Initializes all the dummy sites and garden plants for the logged-in user.
+///
+/// [userId] is the Firebase Auth user ID for a logged in dummy user.
+initUserData(FirebaseFirestore db, String userId) async {
+  developer.log('Initializing user data for $userId', name: 'prefill');
+  var timeLine = TimeLine(id: 'timeline-id-1');
+  timeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-01')));
+  timeLine.addEvent(Fertilization(dateTime: DateTime.parse('2024-09-03')));
+  timeLine.addEvent(Note(
+      dateTime: DateTime.parse('2024-09-10'),
+      note: 'To mi to ale pekne roste!'));
+  timeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-12')));
+  await storeTimeline(timeLine);
+  developer.log('User data initialized for $userId', name: 'prefill');
 }
 
 Future<void> _uploadPlant(PlantModel plant) async {

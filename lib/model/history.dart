@@ -1,4 +1,11 @@
+import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+const timelinePath = 'timeline';
+
+/// `/timeline/<timelineId>/events`
+const eventsPath = 'events';
 
 /// Historical event for a plant.
 abstract class Event {
@@ -23,8 +30,12 @@ class Note extends Event {
 }
 
 class TimeLine {
+  final String id;
+
   /// Ordered by time
   final List<Event> _events = List.empty(growable: true);
+
+  TimeLine({required this.id});
 
   void addEvent(Event event) {
     _events.add(event);
@@ -37,5 +48,73 @@ class TimeLine {
   void replaceAllEvents(List<Event> events) {
     _events.clear();
     _events.addAll(events);
+  }
+}
+
+Future<TimeLine> fetchTimeline(String timelineId) async {
+  log('Fetching timeline $timelineId');
+  var db = FirebaseFirestore.instance;
+  var eventsCol = await db
+      .collection(timelinePath)
+      .doc(timelineId)
+      .collection(eventsPath)
+      .get();
+  if (eventsCol.size == 0) {
+    return TimeLine(id: timelineId);
+  } else {
+    var timeline = TimeLine(id: timelineId);
+    for (var eventDoc in eventsCol.docs) {
+      var eventData = eventDoc.data();
+      var event = _eventFromJson(eventData);
+      timeline.addEvent(event);
+    }
+    return timeline;
+  }
+}
+
+Future<void> storeTimeline(TimeLine timeline) async {
+  log('Storing timeline ${timeline.id}');
+  var db = FirebaseFirestore.instance;
+  var eventsCol =
+      db.collection(timelinePath).doc(timeline.id).collection(eventsPath);
+  List<Future<void>> storeFutures = [];
+  for (var event in timeline.getEventsByTime()) {
+    var eventData = _eventToJson(event);
+    var fut = eventsCol.doc().set(eventData);
+    storeFutures.add(fut);
+  }
+  await Future.wait(storeFutures);
+}
+
+Event _eventFromJson(Map<String, dynamic> json) {
+  switch (json['type']) {
+    case 'fertilization':
+      return Fertilization(dateTime: DateTime.parse(json['dateTime']));
+    case 'watering':
+      return Watering(dateTime: DateTime.parse(json['dateTime']));
+    case 'note':
+      return Note(
+          dateTime: DateTime.parse(json['dateTime']), note: json['note']);
+    default:
+      throw ArgumentError('Unknown event type: ${json['type']}');
+  }
+}
+
+Map<String, dynamic> _eventToJson(Event event) {
+  if (event is Fertilization) {
+    return {
+      'type': 'fertilization',
+      'dateTime': event.dateTime.toIso8601String()
+    };
+  } else if (event is Watering) {
+    return {'type': 'watering', 'dateTime': event.dateTime.toIso8601String()};
+  } else if (event is Note) {
+    return {
+      'type': 'note',
+      'dateTime': event.dateTime.toIso8601String(),
+      'note': event.note
+    };
+  } else {
+    throw ArgumentError('Unknown event type: $event');
   }
 }

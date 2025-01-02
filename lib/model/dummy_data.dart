@@ -83,15 +83,18 @@ Future<Site> livingRoom() async {
     image: const AssetImage('assets/living_room.png'),
     light: Light.partialSun,
   );
-  var monsteraTimeLine = TimeLine();
+  var monsteraTimeLine = TimeLine(id: 'timeline-id-2');
   monsteraTimeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-01')));
   monsteraTimeLine.addEvent(Fertilization(dateTime: DateTime.parse('2024-09-03')));
   monsteraTimeLine.addEvent(Note(dateTime: DateTime.parse('2024-09-10'), note: 'To mi to ale pekne roste!'));
   monsteraTimeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-12')));
   site.addPlant(Plant(info: await monsteraStadleyana(), timeLine: monsteraTimeLine));
-  site.addPlant(Plant(info: await aglaonema(), timeLine: TimeLine()));
-  site.addPlant(Plant(info: await hoyaTricolor(), timeLine: TimeLine()));
-  site.addPlant(Plant(info: await syngoniumPixie(), timeLine: TimeLine()));
+  site.addPlant(
+      Plant(info: await aglaonema(), timeLine: TimeLine(id: 'timeline-id-1')));
+  site.addPlant(Plant(
+      info: await hoyaTricolor(), timeLine: TimeLine(id: 'timeline-id-3')));
+  site.addPlant(Plant(
+      info: await syngoniumPixie(), timeLine: TimeLine(id: 'timeline-id-4')));
   return site;
 }
 
@@ -101,8 +104,11 @@ Future<Site> kitchen() async {
     image: const AssetImage('assets/kitchen.png'),
     light: Light.fullSun,
   );
-  site.addPlant(Plant(info: await philodendronRedSun(), timeLine: TimeLine()));
-  site.addPlant(Plant(info: await syngoniumPixie(), timeLine: TimeLine()));
+  site.addPlant(Plant(
+      info: await philodendronRedSun(),
+      timeLine: TimeLine(id: 'timeline-id-5')));
+  site.addPlant(Plant(
+      info: await syngoniumPixie(), timeLine: TimeLine(id: 'timeline-id-6')));
   return site;
 }
 

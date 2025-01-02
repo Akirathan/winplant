@@ -113,7 +113,8 @@ _initEmulators() async {
     log('Created user $user', name: 'prefill');
   }
   var userId = user.uid;
-  log('User logger: $userId', name: 'prefill');
+  log('User logged: $userId', name: 'prefill');
   assert(auth.currentUser != null);
+  await initUserData(db, userId);
   log('All emulators initialized and prefilled', name: 'prefill');
 }
