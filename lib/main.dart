@@ -115,4 +115,5 @@ _initEmulators() async {
   var userId = user.uid;
   log('User logger: $userId', name: 'prefill');
   assert(auth.currentUser != null);
+  log('All emulators initialized and prefilled', name: 'prefill');
 }

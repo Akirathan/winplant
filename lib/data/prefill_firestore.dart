@@ -16,7 +16,6 @@ initPlants(FirebaseFirestore db, Uri shoptetUri) async {
     print('Failed to fetch the xml file: ${response}');
     exit(1);
   }
-  var plantsCollection = db.collection(plantsCollectionPath);
   var xmlDoc = XmlDocument.parse(response.body);
   var channel = xmlDoc.getElement('rss')!.getElement('channel')!;
   var items = channel.findElements('item');
@@ -34,13 +33,13 @@ initPlants(FirebaseFirestore db, Uri shoptetUri) async {
     var imageLinks = _getImageLinks(item);
     var tags = _getTags(item);
     var plantModel = PlantModel(
+      id: itemGroupId,
       name: title,
       description: description,
       imageLinks: imageLinks,
       tags: tags,
     );
-    var doc = plantsCollection.doc(itemGroupId);
-    var uploadPlantTask = _uploadPlant(plantModel, doc);
+    var uploadPlantTask = _uploadPlant(plantModel);
     updateTasks.add(uploadPlantTask);
   }
   if (updateTasks.isNotEmpty) {
@@ -51,12 +50,11 @@ initPlants(FirebaseFirestore db, Uri shoptetUri) async {
   }
 }
 
-Future<void> _uploadPlant(
-    PlantModel plant, DocumentReference<Map<String, dynamic>> doc) async {
-  var fetchedDoc = await doc.get();
-  if (!fetchedDoc.exists) {
+Future<void> _uploadPlant(PlantModel plant) async {
+  var fetchedPlant = await fetchPlant(plant.id);
+  if (fetchedPlant == null) {
     developer.log('Uploading plant ${plant.name}', name: 'prefill');
-    await doc.set(plant.toJson());
+    await storePlant(plant);
   }
 }
 
