@@ -37,6 +37,40 @@ class TimeLine {
 
   TimeLine({required this.id});
 
+  static Future<TimeLine?> fetch(String timelineId) async {
+    log('Fetching timeline $timelineId');
+    var db = FirebaseFirestore.instance;
+    var eventsCol = await db
+        .collection(timelinePath)
+        .doc(timelineId)
+        .collection(eventsPath)
+        .get();
+    if (eventsCol.size == 0) {
+      return TimeLine(id: timelineId);
+    } else {
+      var timeline = TimeLine(id: timelineId);
+      for (var eventDoc in eventsCol.docs) {
+        var eventData = eventDoc.data();
+        var event = _eventFromJson(eventData);
+        timeline.addEvent(event);
+      }
+      return timeline;
+    }
+  }
+
+  Future<void> store() async {
+    log('Storing timeline $id');
+    var db = FirebaseFirestore.instance;
+    var eventsCol = db.collection(timelinePath).doc(id).collection(eventsPath);
+    List<Future<void>> storeFutures = [];
+    for (var event in getEventsByTime()) {
+      var eventData = _eventToJson(event);
+      var fut = eventsCol.doc().set(eventData);
+      storeFutures.add(fut);
+    }
+    await Future.wait(storeFutures);
+  }
+
   void addEvent(Event event) {
     _events.add(event);
   }
@@ -49,41 +83,6 @@ class TimeLine {
     _events.clear();
     _events.addAll(events);
   }
-}
-
-Future<TimeLine> fetchTimeline(String timelineId) async {
-  log('Fetching timeline $timelineId');
-  var db = FirebaseFirestore.instance;
-  var eventsCol = await db
-      .collection(timelinePath)
-      .doc(timelineId)
-      .collection(eventsPath)
-      .get();
-  if (eventsCol.size == 0) {
-    return TimeLine(id: timelineId);
-  } else {
-    var timeline = TimeLine(id: timelineId);
-    for (var eventDoc in eventsCol.docs) {
-      var eventData = eventDoc.data();
-      var event = _eventFromJson(eventData);
-      timeline.addEvent(event);
-    }
-    return timeline;
-  }
-}
-
-Future<void> storeTimeline(TimeLine timeline) async {
-  log('Storing timeline ${timeline.id}');
-  var db = FirebaseFirestore.instance;
-  var eventsCol =
-      db.collection(timelinePath).doc(timeline.id).collection(eventsPath);
-  List<Future<void>> storeFutures = [];
-  for (var event in timeline.getEventsByTime()) {
-    var eventData = _eventToJson(event);
-    var fut = eventsCol.doc().set(eventData);
-    storeFutures.add(fut);
-  }
-  await Future.wait(storeFutures);
 }
 
 Event _eventFromJson(Map<String, dynamic> json) {

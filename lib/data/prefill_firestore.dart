@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:winplant/model/garden_plant_model.dart';
 import 'package:winplant/model/history.dart';
+import 'package:winplant/model/site_model.dart';
 import 'package:xml/xml.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
@@ -63,15 +65,24 @@ initUserData(FirebaseFirestore db, String userId) async {
       dateTime: DateTime.parse('2024-09-10'),
       note: 'To mi to ale pekne roste!'));
   timeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-12')));
-  await storeTimeline(timeLine);
+  await timeLine.store();
+  var gardenPlant = GardenPlantModel(
+      id: 'garden-plant-id-1', plantId: '103', timelineId: 'timeline-id-1');
+  await gardenPlant.store();
+  var fetchedTimeline = await gardenPlant.timeline();
+  assert(fetchedTimeline.id == timeLine.id);
+
+  var site = SiteModel(
+      id: 'site-id-1', name: 'Obyvak', gardenPlantIds: ['garden-plant-id-1']);
+  await site.store();
   developer.log('User data initialized for $userId', name: 'prefill');
 }
 
 Future<void> _uploadPlant(PlantModel plant) async {
-  var fetchedPlant = await fetchPlant(plant.id);
+  var fetchedPlant = await PlantModel.fetch(plant.id);
   if (fetchedPlant == null) {
     developer.log('Uploading plant ${plant.name}', name: 'prefill');
-    await storePlant(plant);
+    await plant.store();
   }
 }
 

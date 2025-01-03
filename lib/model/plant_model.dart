@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -20,7 +19,24 @@ class PlantModel {
     required this.tags,
   });
 
-  factory PlantModel.fromJson(Map<String, dynamic> data) {
+  static Future<PlantModel?> fetch(String plantId) async {
+    var db = FirebaseFirestore.instance;
+    var col = db.collection(plantsCollectionPath);
+    var doc = await col.doc(plantId).get();
+    if (!doc.exists) {
+      return null;
+    } else {
+      return PlantModel._fromJson(doc.data()!);
+    }
+  }
+
+  Future<void> store() async {
+    var db = FirebaseFirestore.instance;
+    var doc = db.collection(plantsCollectionPath).doc(id);
+    await doc.set(_toJson());
+  }
+
+  factory PlantModel._fromJson(Map<String, dynamic> data) {
     var imgLinks = data['imageLinks'];
     List<Uri>? imageLinks;
     if (imgLinks is Iterable) {
@@ -40,7 +56,7 @@ class PlantModel {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> _toJson() {
     return {
       'id': id,
       'name': name,
@@ -49,21 +65,4 @@ class PlantModel {
       'tags': tags,
     };
   }
-}
-
-Future<PlantModel?> fetchPlant(String plantId) async {
-  var db = FirebaseFirestore.instance;
-  var col = db.collection(plantsCollectionPath);
-  var doc = await col.doc(plantId).get();
-  if (!doc.exists) {
-    return null;
-  } else {
-    return PlantModel.fromJson(doc.data()!);
-  }
-}
-
-Future<void> storePlant(PlantModel plant) async {
-  var db = FirebaseFirestore.instance;
-  var doc = db.collection(plantsCollectionPath).doc(plant.id);
-  await doc.set(plant.toJson());
 }
