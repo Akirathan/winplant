@@ -4,7 +4,12 @@ Mobile app for taking care of plants. Based on Flutter and FireBase.
 
 ## Firebase
 
-Setup
+Setup emulators:
+
+```bash
+firebase init emulators
+firebase emulators:start
+```
 
 ### Secrets
 
