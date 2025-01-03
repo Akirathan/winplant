@@ -61,7 +61,12 @@ class TimeLine {
   Future<void> store() async {
     log('Storing timeline $id');
     var db = FirebaseFirestore.instance;
-    var eventsCol = db.collection(timelinePath).doc(id).collection(eventsPath);
+    var timelineDoc = db.collection(timelinePath).doc(id);
+    if ((await timelineDoc.get()).exists) {
+      log('Deleting existing events for timeline $id');
+      await timelineDoc.delete();
+    }
+    var eventsCol = timelineDoc.collection(eventsPath);
     List<Future<void>> storeFutures = [];
     for (var event in getEventsByTime()) {
       var eventData = _eventToJson(event);
