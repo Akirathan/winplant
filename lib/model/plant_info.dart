@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Information about plant as fetched from the catalogue.
+/// TODO: Deprecated in favor of PlantModel
 class PlantInfo {
   final String name;
   final String description;

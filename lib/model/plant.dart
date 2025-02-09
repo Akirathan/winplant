@@ -7,6 +7,7 @@ import 'package:winplant/model/plant_info.dart';
 
 /// A plant that is planted in the user's garden.
 /// A mutable version of [PlantInfo].
+/// TODO: This is deprecated in favor of garden_plant_model
 class Plant {
   final PlantInfo info;
   final TimeLine timeLine;
