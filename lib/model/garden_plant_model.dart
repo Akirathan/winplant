@@ -16,8 +16,8 @@ class GardenPlantModel {
   GardenPlantModel(
       {required this.id, required this.plantId, required this.timelineId});
 
-  static Future<GardenPlantModel?> fetch(String gardenPlantId) async {
-    var db = FirebaseFirestore.instance;
+  static Future<GardenPlantModel?> fetch(
+      FirebaseFirestore db, String gardenPlantId) async {
     var doc = await db.collection(gardenPlantPath).doc(gardenPlantId).get();
     if (!doc.exists) {
       return null;
@@ -30,8 +30,7 @@ class GardenPlantModel {
     }
   }
 
-  Future<void> store() async {
-    var db = FirebaseFirestore.instance;
+  Future<void> store(FirebaseFirestore db) async {
     var doc = db.collection(gardenPlantPath).doc(id);
     await doc.set(toJson());
   }
@@ -44,8 +43,8 @@ class GardenPlantModel {
     };
   }
 
-  Future<TimeLine> timeline() async {
-    var timeline = await TimeLine.fetch(timelineId);
-    return timeline!;
+  Future<TimeLine?> timeline(FirebaseFirestore db) async {
+    var timeline = await TimeLine.fetch(db, timelineId);
+    return timeline;
   }
 }
