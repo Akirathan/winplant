@@ -37,16 +37,16 @@ class TimeLine {
 
   TimeLine({required this.id});
 
-  static Future<TimeLine?> fetch(String timelineId) async {
+  static Future<TimeLine?> fetch(
+      FirebaseFirestore db, String timelineId) async {
     log('Fetching timeline $timelineId');
-    var db = FirebaseFirestore.instance;
     var eventsCol = await db
         .collection(timelinePath)
         .doc(timelineId)
         .collection(eventsPath)
         .get();
     if (eventsCol.size == 0) {
-      return TimeLine(id: timelineId);
+      return null;
     } else {
       var timeline = TimeLine(id: timelineId);
       for (var eventDoc in eventsCol.docs) {
@@ -58,22 +58,18 @@ class TimeLine {
     }
   }
 
-  Future<void> store() async {
+  Future<void> store(FirebaseFirestore db) async {
     log('Storing timeline $id');
-    var db = FirebaseFirestore.instance;
     var timelineDoc = db.collection(timelinePath).doc(id);
     if ((await timelineDoc.get()).exists) {
       log('Deleting existing events for timeline $id');
       await timelineDoc.delete();
     }
     var eventsCol = timelineDoc.collection(eventsPath);
-    List<Future<void>> storeFutures = [];
     for (var event in getEventsByTime()) {
       var eventData = _eventToJson(event);
-      var fut = eventsCol.doc().set(eventData);
-      storeFutures.add(fut);
+      await eventsCol.doc().set(eventData);
     }
-    await Future.wait(storeFutures);
   }
 
   void addEvent(Event event) {
