@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:winplant/data/utils.dart';
 import 'package:winplant/model/site_model.dart';
 
 const userDataPath = 'user-data';
@@ -26,7 +27,7 @@ class UserData {
   static Future<UserData> fetch(FirebaseFirestore db, String userId) async {
     var userDoc = await db.collection(userDataPath).doc(userId).get();
     var userData = userDoc.data()!;
-    var sites = userData['sites'] as List<String>;
+    var sites = asStrList(userData['sites']);
     return UserData(id: userId, siteIds: sites);
   }
 
