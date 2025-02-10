@@ -65,16 +65,16 @@ initUserData(FirebaseFirestore db, String userId) async {
       dateTime: DateTime.parse('2024-09-10'),
       note: 'To mi to ale pekne roste!'));
   timeLine.addEvent(Watering(dateTime: DateTime.parse('2024-09-12')));
-  await timeLine.store();
+  await timeLine.store(db);
   var gardenPlant = GardenPlantModel(
       id: 'garden-plant-id-1', plantId: '103', timelineId: 'timeline-id-1');
-  await gardenPlant.store();
-  var fetchedTimeline = await gardenPlant.timeline();
-  assert(fetchedTimeline.id == timeLine.id);
+  await gardenPlant.store(db);
+  var fetchedTimeline = await gardenPlant.timeline(db);
+  assert(fetchedTimeline!.id == timeLine.id);
 
   var site = SiteModel(
       id: 'site-id-1', name: 'Obyvak', gardenPlantIds: ['garden-plant-id-1']);
-  await site.store();
+  await site.store(db);
   developer.log('User data initialized for $userId', name: 'prefill');
 }
 
