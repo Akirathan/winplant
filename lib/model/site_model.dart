@@ -11,8 +11,7 @@ class SiteModel {
   SiteModel(
       {required this.id, required this.name, required this.gardenPlantIds});
 
-  static Future<SiteModel?> fetch(String siteId) async {
-    var db = FirebaseFirestore.instance;
+  static Future<SiteModel?> fetch(FirebaseFirestore db, String siteId) async {
     var doc = await db.collection(sitesPath).doc(siteId).get();
     if (!doc.exists) {
       return null;
@@ -24,9 +23,9 @@ class SiteModel {
     }
   }
 
-  Stream<GardenPlantModel> gardenPlants() async* {
+  Stream<GardenPlantModel> gardenPlants(FirebaseFirestore db) async* {
     for (var plantId in gardenPlantIds) {
-      var plant = await GardenPlantModel.fetch(plantId);
+      var plant = await GardenPlantModel.fetch(db, plantId);
       if (plant == null) {
         throw Exception('Plant not found: $plantId');
       }
@@ -34,8 +33,7 @@ class SiteModel {
     }
   }
 
-  Future<void> store() async {
-    var db = FirebaseFirestore.instance;
+  Future<void> store(FirebaseFirestore db) async {
     var doc = db.collection(sitesPath).doc(id);
     await doc.set({
       'name': name,

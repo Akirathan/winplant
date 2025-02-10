@@ -12,11 +12,11 @@ class UserData {
 
   UserData({required this.id, required this.siteIds});
 
-  Future<List<SiteModel>> get sites async {
+  Future<List<SiteModel>> sites(FirebaseFirestore db) async {
     if (_sites == null) {
       List<SiteModel> sites = List.empty(growable: true);
       for (var siteId in siteIds) {
-        var site = await SiteModel.fetch(siteId);
+        var site = await SiteModel.fetch(db, siteId);
         sites.add(site!);
       }
       _sites = sites;
