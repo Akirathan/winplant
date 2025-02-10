@@ -24,9 +24,12 @@ class UserData {
     return _sites!;
   }
 
-  static Future<UserData> fetch(FirebaseFirestore db, String userId) async {
+  static Future<UserData?> fetch(FirebaseFirestore db, String userId) async {
     var userDoc = await db.collection(userDataPath).doc(userId).get();
-    var userData = userDoc.data()!;
+    var userData = userDoc.data();
+    if (userData == null) {
+      return null;
+    }
     var sites = asStrList(userData['sites']);
     return UserData(id: userId, siteIds: sites);
   }

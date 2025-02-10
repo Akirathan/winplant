@@ -12,7 +12,13 @@ void main() {
     var userData = UserData(id: id, siteIds: []);
     await userData.store(db);
     var fetchedUserData = await UserData.fetch(db, id);
-    expect(fetchedUserData.id, id);
+    expect(fetchedUserData!.id, id);
+  });
+
+  test('Fetch non-existing user', () async {
+    var id = 'non-existing-user';
+    var fetchedUserData = await UserData.fetch(db, id);
+    expect(fetchedUserData, isNull);
   });
 
   tearDown(() async {});
