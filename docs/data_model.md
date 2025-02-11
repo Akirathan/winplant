@@ -1,17 +1,26 @@
 # Firestore data model
 
-- Users
-    - Path: `/user-data/{uid}`
+- User
+    - Path: `/user-data/{userID}`
+    - Structure:
+        - `sites`: List of IDs to `Site`
 
 - Sites
-    - Path: `/user-data/{uid}/sites/{siteName}`
+    - Path: `/sites/{siteID}`
     - Structure:
-        - `plants`: List of `GardenPlant`
+        - `plants`: List of IDs to `GardenPlant`
 
 - GardenPlant
-    - Path: `/user-data/{uid}/sites/{siteName}/plants/{gardenPlantID}`
+    - Path: `/garden-plants/{gardenPlantID}`
     - Structure:
         - name: String
 
+- TimeLine
+    - Path: `/timeline/{timeLineID}`
+    - For every `{gardenPlantID}`, there is a single `TimeLine` document.
+    - Structure:
+        - `events`: List of `Event` documents.
+
 - Plant
     - Path: `/plants/{plantID}`
+  - src: `/lib/model/plant_model.dart`

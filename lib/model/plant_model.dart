@@ -19,8 +19,7 @@ class PlantModel {
     required this.tags,
   });
 
-  static Future<PlantModel?> fetch(String plantId) async {
-    var db = FirebaseFirestore.instance;
+  static Future<PlantModel?> fetch(FirebaseFirestore db, String plantId) async {
     var col = db.collection(plantsCollectionPath);
     var doc = await col.doc(plantId).get();
     if (!doc.exists) {
@@ -30,8 +29,7 @@ class PlantModel {
     }
   }
 
-  Future<void> store() async {
-    var db = FirebaseFirestore.instance;
+  Future<void> store(FirebaseFirestore db) async {
     var doc = db.collection(plantsCollectionPath).doc(id);
     await doc.set(_toJson());
   }

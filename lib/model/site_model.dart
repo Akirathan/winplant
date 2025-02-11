@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:winplant/data/utils.dart';
 import 'package:winplant/model/garden_plant_model.dart';
 
 const sitesPath = 'sites';
@@ -17,17 +18,17 @@ class SiteModel {
       return null;
     } else {
       var data = doc.data()!;
-      var plantIds = data['plants'] as List<String>;
+      var plantIds = asStrList(data['plants']);
       return SiteModel(
           id: siteId, name: data['name'], gardenPlantIds: plantIds);
     }
   }
 
-  Stream<GardenPlantModel> gardenPlants(FirebaseFirestore db) async* {
+  Stream<GardenPlantModel?> gardenPlants(FirebaseFirestore db) async* {
     for (var plantId in gardenPlantIds) {
       var plant = await GardenPlantModel.fetch(db, plantId);
       if (plant == null) {
-        throw Exception('Plant not found: $plantId');
+        yield null;
       }
       yield plant;
     }
