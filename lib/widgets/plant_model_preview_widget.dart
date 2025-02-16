@@ -11,7 +11,7 @@ class PlantModelPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var images = _imagesRow();
+    var image = _firstImage();
 
     return ConstrainedBox(
       constraints: const BoxConstraints.tightFor(height: 200),
@@ -21,7 +21,7 @@ class PlantModelPreviewWidget extends StatelessWidget {
               flex: 2,
               child: Row(
                 children: [
-                  Flexible(child: images),
+                  Flexible(child: image),
                   Flexible(
                     flex: 2,
                     child: Text(
@@ -46,9 +46,8 @@ class PlantModelPreviewWidget extends StatelessWidget {
     );
   }
 
-  Widget _imagesRow() {
-    return Row(children: [
-      for (var image in plant.imageLinks) LoadingImageWidget(url: image)
-    ]);
+  Widget _firstImage() {
+    var imageUrl = plant.imageLinks.first;
+    return LoadingImageWidget(url: imageUrl, width: 200, height: 200);
   }
 }
