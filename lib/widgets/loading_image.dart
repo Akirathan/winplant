@@ -22,7 +22,20 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget> {
     var imgProvider = _image.image;
     var imgStream = imgProvider.resolve(const ImageConfiguration());
     var listener = ImageStreamListener((imgInfo, _) {
-      _isFetched = true;
+      setState(() {
+        _isFetched = true;
+      });
+    }, onChunk: (chunk) {
+      debugPrint('onChunk: $chunk');
+      if (chunk.expectedTotalBytes != null) {
+        if (chunk.expectedTotalBytes! == chunk.cumulativeBytesLoaded) {
+          setState(() {
+            _isFetched = true;
+          });
+        }
+      }
+    }, onError: (error, stackTrace) {
+      debugPrint('onError: $error, $stackTrace');
     });
     imgStream.addListener(listener);
   }
