@@ -90,14 +90,23 @@ class _MainScaffoldState extends State<_MainScaffold> {
 
 _initEmulators() async {
   log('Prefilling Firestore with dummy data', name: 'prefill');
-  FirebaseFirestore.instance.useFirestoreEmulator("127.0.0.1", 8080);
+  // Ensure that the emulator is running
+  var firebaseHost = '127.0.0.1';
+  var firestorePort = 8080;
+  var authPort = 9099;
+  FirebaseFirestore.instance.useFirestoreEmulator(firebaseHost, firestorePort);
   var db = FirebaseFirestore.instance;
+  try {
+    db.collection('foooo');
+  } on FirebaseException catch (e) {
+    throw StateError('Firestore emulator is not running: $e');
+  }
   await dotenv.load();
   var shoptetUri = Uri.parse(dotenv.env['shoptetUrl']!);
   await initPlants(db, shoptetUri);
   // Init auth emulator
   var auth = FirebaseAuth.instance;
-  await auth.useAuthEmulator('127.0.0.1', 9099);
+  await auth.useAuthEmulator(firebaseHost, authPort);
   var userEmail = 'dummy@dummy.org';
   var userPwd = '123456';
   User user;
