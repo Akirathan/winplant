@@ -26,7 +26,6 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget> {
         _isFetched = true;
       });
     }, onChunk: (chunk) {
-      debugPrint('onChunk: $chunk');
       if (chunk.expectedTotalBytes != null) {
         if (chunk.expectedTotalBytes! == chunk.cumulativeBytesLoaded) {
           setState(() {
