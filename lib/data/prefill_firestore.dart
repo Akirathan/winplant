@@ -42,14 +42,13 @@ initPlants(FirebaseFirestore db, Uri shoptetUri) async {
       imageLinks: imageLinks,
       tags: tags,
     );
-    var uploadPlantTask = _uploadPlant(plantModel);
+    var uploadPlantTask = _uploadPlant(db, plantModel);
     updateTasks.add(uploadPlantTask);
   }
   if (updateTasks.isNotEmpty) {
     developer.log('Awaiting all futures (${updateTasks.length})',
         name: 'prefill');
-    await Future.wait(updateTasks);
-    developer.log('All futures completed', name: 'prefill');
+    return Future.wait(updateTasks);
   }
 }
 
@@ -78,11 +77,11 @@ initUserData(FirebaseFirestore db, String userId) async {
   developer.log('User data initialized for $userId', name: 'prefill');
 }
 
-Future<void> _uploadPlant(PlantModel plant) async {
-  var fetchedPlant = await PlantModel.fetch(plant.id);
+Future<void> _uploadPlant(FirebaseFirestore db, PlantModel plant) async {
+  var fetchedPlant = await PlantModel.fetch(db, plant.id);
   if (fetchedPlant == null) {
     developer.log('Uploading plant ${plant.name}', name: 'prefill');
-    await plant.store();
+    await plant.store(db);
   }
 }
 

@@ -104,6 +104,7 @@ _initEmulators() async {
   await dotenv.load();
   var shoptetUri = Uri.parse(dotenv.env['shoptetUrl']!);
   await initPlants(db, shoptetUri);
+  log('All plants uploaded', name: 'prefill');
   // Init auth emulator
   var auth = FirebaseAuth.instance;
   await auth.useAuthEmulator(firebaseHost, authPort);
