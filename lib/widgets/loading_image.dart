@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class LoadingImageWidget extends StatefulWidget {
   final Uri url;
+  final double? width;
+  final double? height;
 
-  const LoadingImageWidget({super.key, required this.url});
+  const LoadingImageWidget(
+      {super.key, required this.url, this.width, this.height});
 
   @override
   State<StatefulWidget> createState() => _LoadingImageWidgetState();
@@ -18,7 +21,8 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget> {
   @override
   void initState() {
     super.initState();
-    _image = Image.network(widget.url.toString());
+    _image = Image.network(widget.url.toString(),
+        width: widget.width, height: widget.height);
     var imgProvider = _image.image;
     var imgStream = imgProvider.resolve(const ImageConfiguration());
     var listener = ImageStreamListener((imgInfo, _) {
@@ -44,7 +48,14 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget> {
     if (_isFetched) {
       return _image;
     } else {
-      return const CircularProgressIndicator();
+      if (widget.height != null) {
+        return SizedBox(
+            width: widget.width,
+            height: widget.height,
+            child: const CircularProgressIndicator());
+      } else {
+        return const CircularProgressIndicator();
+      }
     }
   }
 }
