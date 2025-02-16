@@ -52,7 +52,10 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget> {
         return SizedBox(
             width: widget.width,
             height: widget.height,
-            child: const CircularProgressIndicator());
+            child: const Padding(
+              padding: EdgeInsets.all(40),
+              child: CircularProgressIndicator(),
+            ));
       } else {
         return const CircularProgressIndicator();
       }
