@@ -88,7 +88,7 @@ void main() {
 
     HttpOverrides.runZoned(() async {
       var widget = LoadingImageWidget(url: Uri.parse(url));
-      await tester.pumpWidget(MaterialApp(home: widget));
+      await tester.pumpWidget(widget);
 
       var progressFinder = find.byType(CircularProgressIndicator);
       expect(progressFinder, findsOneWidget);
