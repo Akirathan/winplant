@@ -7,7 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:winplant/routes.dart';
 import 'package:winplant/widgets/dashboard.dart';
 import 'package:winplant/data/prefill_firestore.dart';
-import 'package:winplant/widgets/plant_catalogue_widget.dart';
+import 'package:winplant/widgets/plant_catalogue.dart';
 import 'package:winplant/widgets/garden_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
